@@ -1,15 +1,60 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+
+  <div class="menu">
+    <a v-for="menu in menus" :key="menu"> {{ menu }} </a>
+    
+  </div>
+
+  <div v-for="produnct in productJson" :key="produnct.index">
+    <p>글번호 : {{produnct.index}}</p>
+    <h4>{{ produnct.porduct }}</h4>
+    <p>{{ produnct.price }} 만원</p>
+  </div> 
+  
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'App',
+  data() {
+    return {
+      products : ['역삼동원룸' , '마포구원룸' , '동작구원룸' , '서초구원룸' , '관악구원룸'],
+      menus : ['HOME' , 'Products' , 'About'],
+      style : 'color : red',
+      productJson : [
+      {
+        porduct : '역삼동원룸',
+        price : 60,
+        index : 0
+      },
+      {
+        porduct : '마포구원룸',
+        price : 90,
+        index : 1
+      },
+      {
+        porduct : '동작구원룸',
+        price : 100,
+        index : 2
+      },
+      {
+        porduct : '서초구원룸',
+        price : 50,
+        index : 3
+      },
+      {
+        porduct : '관악구원룸' ,
+        price : 60,
+        index : 4
+      }
+        
+        
+    ],
+
+    }
+  },
   components: {
-    HelloWorld
   }
 }
 </script>
@@ -21,6 +66,14 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
+.menu {
+    background:  darkslateblue;
+    padding: 15px;
+    border-radius: 5px;
+  }
+  .menu a {
+    color: white;
+    padding : 10px;
+  }
 </style>
