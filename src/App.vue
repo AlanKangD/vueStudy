@@ -15,7 +15,7 @@
   <div v-for="(produnct, i) in productJson" :key="i">
     <!-- 반복문이 돌 경ㅇ우 각각의 한영역을 produnct 에 값을 넣어서 해당 json 데이터의 key값을 넣어주면 데이터를 잘 출력합니다, -->
     <p>글번호 : {{produnct.index}}</p> 
-    <h4 @click="openModal = true">{{ produnct.porduct }}</h4>
+    <h4 v-on:click="openModal = true">{{ produnct.porduct }}</h4>
     <p>{{ produnct.price }} 만원</p>
     <img src="./assets/room1.jpg" class="room-img">
      
@@ -28,11 +28,14 @@
 </template>
 
 <script>
+import data from './assets/data'
+
 
 export default {
   name: 'App',
   data() {
     return {
+      data,
       openModal : false, //true은 열림, false은 닫힘
        신고수 : [0,0,0],
       products : ['역삼동원룸' , '마포구원룸' , '동작구원룸' , '서초구원룸' , '관악구원룸'],
@@ -67,8 +70,8 @@ export default {
         
         
     ],
-
     }
+    
   },
   methods : {
     increase() {
