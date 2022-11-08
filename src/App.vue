@@ -1,22 +1,15 @@
 <template>
-  <div class="black-bg" v-if="openModal == true">
-    <div class="white-bg"> 
-      <h4>{{원룸들[clickCheck].title}}</h4>
-      <p>{{원룸들[clickCheck].content}}</p>
-      <button @click="openModal=false">닫기</button>
-    </div>
-  </div>
+
+  <discountTest  v-bind="오프잭트" :이름="오브잭트.name"  :나이="오브잭트.age"/>
+
+  
 
   <div class="menu">
-    <a v-for="menu in menus" :key="menu"> {{ menu }} </a>
-    
+    <a v-for="menu in menus" :key="menu"> {{ menu }} </a>  
   </div>
- <div v-for="(i, p) in 원룸들" :key="p">
-    <!-- <p>{{p}}</p> -->
-    <img :src="원룸들[p].image" class="room-img">
-    <h4 @click="openModal = true; clickCheck=p">{{원룸들[p].title}}</h4>
-    <p>{{원룸들[p].price}}원</p>
- </div>
+
+  <card :원룸들="원룸들" />
+
 
  <br>
   <button v-on:click="신고수[0]++">허위매물신고</button> <span>신고 수 : {{신고수}}</span>
@@ -26,12 +19,15 @@
 </template>
 
 <script>
-import data from './assets/data'
+import data from './assets/data';
+import discountTest from './countTest.vue';
+import card from './card.vue';
 
 export default {
   name: 'App',
   data() {
     return {
+      오브잭트 : { name : 'kim' , age : 20},
       clickCheck : 0,
       원룸들 :  data,
       openModal : false, //true은 열림, false은 닫힘
@@ -77,7 +73,9 @@ export default {
     }
   },  
   components: {
-  }
+    discountTest : discountTest,
+    card : card,
+}
 }
 </script>
 
@@ -102,7 +100,6 @@ div {
   background: white;
   border-radius: 8px;
   padding: 20px;
-  margin-top: 120px;
 }
 
 #app {
@@ -127,5 +124,11 @@ div {
     margin-top: 40px;
   }
 
+  .discount {
+    background: #eee;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+  }
 
 </style>
