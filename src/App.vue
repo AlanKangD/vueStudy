@@ -1,14 +1,38 @@
 <template>
+ 
 
-  <discountTest  v-bind="오프잭트" :이름="오브잭트.name"  :나이="오브잭트.age"/>
+<div class="black-bg" v-if="openModal == true">
+    <div class="white-bg"> 
+     
+      <img :src="원룸들[clickCheck].image" class="room-img">
+      <h4>{{원룸들[clickCheck].title}}</h4>
+      <p>{{ 원룸들[clickCheck].content}}</p>
+      <p> {{ month }} 개월 선택함 : {{원룸들[clickCheck].price * month}}원</p>
+      <!-- <input  @input="month = $event.target.value"> <br> -->
+      <input  v-model.number="month"> <br>
+      <textarea v-model.number="month"></textarea>   <!--v-model 또는 @input 을 쓰면 됩니다. -->
+      <select v-model.number="month">
+        <option>123</option>
+        <option>456</option>
+        <option>789</option>
+      </select>
+      <input type="checkbox" @change="month = 1">
+
+       <button @click="openModal=false">닫기</button> 
+    </div>
+  </div>
+
+  <discountTest :원룸들="원룸들" :clickCheck="clickCheck"/>
 
   
 
   <div class="menu">
     <a v-for="menu in menus" :key="menu"> {{ menu }} </a>  
   </div>
-
-  <card :원룸들="원룸들" />
+  <div class="discount">
+          <h4>지금 결제하면 20% 할인</h4>
+  </div>  
+  <card @openMsg="openModal = true; clickCheck = $event;" :원룸들="원룸들" />
 
 
  <br>
@@ -27,6 +51,7 @@ export default {
   name: 'App',
   data() {
     return {
+      month : 1,
       오브잭트 : { name : 'kim' , age : 20},
       clickCheck : 0,
       원룸들 :  data,

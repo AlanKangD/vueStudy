@@ -8,9 +8,7 @@
       <h4>{{원룸들[clickCheck].title}}</h4>
       <p>{{원룸들[clickCheck].content}}</p>
       <p>{{원룸들[clickCheck].price}}원</p>
-      <div class="discount">
-          <h4>지금 결제하면 20% 할인</h4>
-      </div>  
+      
       <!-- <button @click="openModal=false">닫기</button> -->
     </div>
   </div>
