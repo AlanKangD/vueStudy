@@ -1,6 +1,7 @@
 <template>
  
-
+<!-- <div class="start" :class="{ end : openModal }"> -->
+<transition name="fade">
 <div class="black-bg" v-if="openModal == true">
     <div class="white-bg"> 
      
@@ -9,29 +10,23 @@
       <p>{{ 원룸들[clickCheck].content}}</p>
       <p> {{ month }} 개월 선택함 : {{원룸들[clickCheck].price * month}}원</p>
       <!-- <input  @input="month = $event.target.value"> <br> -->
-      <input  v-model.number="month"> <br>
-      <textarea v-model.number="month"></textarea>   <!--v-model 또는 @input 을 쓰면 됩니다. -->
-      <select v-model.number="month">
-        <option>123</option>
-        <option>456</option>
-        <option>789</option>
-      </select>
-      <input type="checkbox" @change="month = 1">
-
+      <input v-model.number="month"> <br>
+      
        <button @click="openModal=false">닫기</button> 
     </div>
   </div>
-
+</transition>
+<!-- </div> -->
   <discountTest :원룸들="원룸들" :clickCheck="clickCheck"/>
-
   
-
   <div class="menu">
     <a v-for="menu in menus" :key="menu"> {{ menu }} </a>  
-  </div>
-  <div class="discount">
-          <h4>지금 결제하면 20% 할인</h4>
-  </div>  
+  </div> 
+
+ <discount v-if="showdiscount" />
+
+ <button @click="priceSort">가격순 버튼</button>
+ <button @click="sortBack">되돌리기</button>
   <card @openMsg="openModal = true; clickCheck = $event;" :원룸들="원룸들" />
 
 
@@ -46,12 +41,15 @@
 import data from './assets/data';
 import discountTest from './countTest.vue';
 import card from './card.vue';
+import discount from './discount.vue';
 
 export default {
   name: 'App',
   data() {
     return {
-      month : 1,
+      showdiscount : true,
+      원룸들오리지널 : [...data],
+      month : "",
       오브잭트 : { name : 'kim' , age : 20},
       clickCheck : 0,
       원룸들 :  data,
@@ -92,15 +90,48 @@ export default {
     }
     
   },
+  watch : {
+    month(a , b) { // a는 변경 후 b는 변경 전 데이터 입니다. 
+      console.log(isNaN(a));
+      // if(isNaN(a) == true) {
+      //   alert('문자열을 입력했습니다');
+      //   this.month = "";
+      // }
+      if(typeof a == "string") {
+        this.month = ""
+        alert('숫자만 들어올 수 있습니다!')
+      }
+      if(a > 13) {
+        this.month = ""
+        alert('13보다 입력값이 큽니다!' + b)
+        
+      }
+    }
+  },
   methods : {
     increase() {
       this.신고수[2]++   //만약 신고수라는 변수를 사용하기 위해서는 this 를 붙여줘야 변수로 인식할 수 있습니다.
+    },
+    priceSort() {
+      this.원룸들.sort(function(a,b) {
+        return a.price - b.price
+      }) 
+    },
+    sortBack() {
+      this.원룸들 = [...this.원룸들오리지널];
     }
   },  
+  mounted(){
+   setTimeout(()=>{
+      this.showdiscount = false;
+   }, 2000);
+  },
+
   components: {
     discountTest : discountTest,
     card : card,
-}
+    discount : discount,
+  }
 }
 </script>
 
@@ -111,6 +142,36 @@ body {
 
 div {
   box-sizing: border-box;
+}
+
+.start {
+  opacity: 0;
+  transition: all 1s;
+}
+.end {
+  opacity: 1;
+}
+
+.fade-enter-from {
+  opacity: 0;
+
+}
+.fade-enter-active {
+  transition: all 1s;
+}
+.fade-enter-to {
+  opacity: 1;
+}
+
+.fade-leave-from {
+  opacity: 1;
+
+}
+.fade-leave-active {
+  transition: all 1s;
+}
+.fade-leave-to {
+  opacity: 0;
 }
 
 .black-bg {
